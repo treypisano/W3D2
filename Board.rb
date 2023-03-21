@@ -10,6 +10,7 @@ class Board
 
   def initialize()
     @grid = Array.new(4) {Array.new(4)}
+    self.populate
   end
 
   # [[J,K,L,I]
@@ -69,10 +70,12 @@ class Board
     @grid.each_with_index do |row,i|
       new_str = (i).to_s + " "
       row.each do |ele|
-        if ele.face_up 
-          new_str << ele.face_value + " "
-        else
-          new_str << " " + " "
+        if !ele.nil?
+            if ele.face_up 
+                new_str << ele.face_value + " "
+            else
+                new_str << " " + " "
+            end
         end
       end
       puts new_str
@@ -84,9 +87,14 @@ class Board
 
   end
 
-  def [](position)
+#   def [](position)
+#     @grid[position[0]][position[1]]
+#   end
+
+  def get_card(position)
     @grid[position[0]][position[1]]
   end
+  
 
   def board_full?
     @grid.flatten.all? {|ele| ele.face_up }

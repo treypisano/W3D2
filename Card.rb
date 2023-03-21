@@ -27,13 +27,13 @@ class Card
       
   # end
 
-  # def change_face
-  #   if @face_up == true
-  #     @face_up = false
-  #   else 
-  #     @face_up = true
-  #   end
-  # end
+  def change_face
+    if @face_up == true
+      @face_up = false
+    else 
+      @face_up = true
+    end
+  end
 
 end
 

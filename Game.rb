@@ -15,6 +15,7 @@ require_relative "Board.rb"
 # 5) If all positions are revealed, player wins, if not do nothing
 # 6) Repopulate board again, and hide
 
+require 'byebug'
 class Game
 
   def initialize
@@ -23,42 +24,53 @@ class Game
     @guess_one = nil
     @guess_two = nil
     @turn_counter = 1
+    
+    
   end
 
   def play
-    while !game_over
+    while !@game_over
+      @board.print_grid
       self.get_user_input
-      self.check_positions
-      game_over = true if @board.board_full?
+      # self.check_positions
+      # game_over = true if @board.board_full?
     end
   end
 
   def get_user_input
-    puts "Please enter the position of the card you'd like to flip: (e.g. "2,3")"
-    user_input = gets.chomp.split(",")
-    turn_counter += 1
+    puts "Please enter the position of the card you'd like to flip: (e.g. '2,3')"
+    user_input = gets.chomp.split(",").map(&:to_i)
+    # debugger
     
-    if turn_counter == 1
-      @guess_one == user_input
-    elsif turn_counter == 2
-      @guess_two == user_input
-      turn_counter = 0
-    end
+    @turn_counter += 1
+    @board.get_card(user_input).change_face
+    # if turn_counter == 1
+    #   @guess_one == user_input
+      
+    # elsif turn_counter == 2
+    #   @guess_two == user_input
+    #   turn_counter = 0
+    # end
+
+    
   end
 
-  def check_positions
-    if turn_counter == 1
-      @board.reveal(guess_one)
-    elsif turn_counter == 2
-      @board.reveal(guess_two)
-      if @guess_one != @guess_two
-        puts "Try again!"
-        sleep(2)
-        system("clear")
-      else
-        puts "Its a match!"
-      end
-    end
-  end
+  # def check_positions
+  #   if turn_counter == 1
+  #     @board.reveal(guess_one)
+  #   elsif turn_counter == 2
+  #     @board.reveal(guess_two)
+  #     if @guess_one != @guess_two
+  #       puts "Try again!"
+  #       sleep(2)
+  #       system("clear")
+  #     else
+  #       puts "Its a match!"
+  #     end
+  #   end
+  # end
 
 end
+
+a = Game.new
+a.play
